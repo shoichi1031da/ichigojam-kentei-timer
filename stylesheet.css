@@ -1,0 +1,35 @@
+.field{
+    width:500px;
+    height:400px;
+    background-color:#d2fec1; 
+    border:9px solid;
+    border-color:#6DBC5F;
+}
+
+.barner{
+  height:97px;
+  width:500px;
+  text-align:center;
+}
+
+
+.barner.button{
+    line-height: 97px;
+    text-align:center;
+}
+
+.minutes30{
+    width:500px;
+    font-size:45px;
+    color:white;
+    background-color:#1899b0;
+    text-align:center;
+}
+
+.minutes50{
+    width:500px;
+    font-size:45px;
+    color:white;
+    background-color:#ff5b00;
+    text-align:center;
+}

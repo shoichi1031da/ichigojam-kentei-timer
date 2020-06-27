@@ -1,0 +1,78 @@
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/Users/shoichi/Downloads/jsアプリ/timer/stylesheet.css">
+</head>
+
+<body>
+<div class="field">
+    <div class ="barner">
+        <img src="/Users/shoichi/Downloads/jsアプリ/timer/barner.jpg"><br><br>
+        <button id="btn" style = "height:40px;width:180opx">スタート</button>
+        <div id="output"></div>
+    </div><br><br><br><br><br>
+
+    <div class="minutes30">
+        <div id="minutes30"></div>
+    </div><br>
+
+    <div class="minutes50">
+        <div id="minutes50"></div>
+    </div> 
+
+</div>
+    <script>
+
+        timerID = setInterval('clock()',500);
+        let flag = 0;
+        let st = 0;
+        let ct = 0;
+        let mt = 1;
+        let target2 = document.getElementById("minutes30");
+        let target3 = document.getElementById("minutes50");
+        target2.innerHTML = "10,9級"+" ----> "+"30:00";
+        target3.innerHTML = "8 ~1級"+" ----> "+"50:00";
+
+        //検定開始
+        btn.onclick = () => {
+            if(!flag) st = new Date();
+            flag = 1;
+        }
+
+        //時間の表示
+        function clock(){
+            let target = document.getElementById("output");
+            target.innerHTML = getnow().join(":");
+            if(flag){
+                ct = parseInt((new Date() - st)/1000);
+                mt = parseInt(ct/60);
+                
+                if(mt < 30){
+                    target2.innerHTML = "10,9級"+" ----> " + ("00"+(29-mt)).slice(-2) + ":" + ("00"+(59-ct%60)).slice(-2);
+                    target3.innerHTML = "8 ~1級"+" ----> " + ("00"+(49-mt)).slice(-2) + ":" + ("00"+(59-ct%60)).slice(-2);
+                }else if(mt < 50) {
+                    target2.innerHTML = "10,9級"+" ----> "+"終了！！";
+                    target3.innerHTML = "8 ~1級"+" ----> " + ("00"+(49-mt)).slice(-2) + ":" + ("00"+(59-ct%60)).slice(-2);
+                }else target3.innerHTML = "8 ~1級"+" ----> "+"終了！！"
+
+            }
+        }
+
+        //時刻の取得
+        function getnow(){
+            let now = new Date();
+            let year = now.getFullYear();
+            let month = now.getMonth()+1;
+            let date = now.getDate();
+
+            let hour = now.getHours();
+            hour = ("00" + hour).slice(-2);
+            let minute = now.getMinutes();
+            minute = ("00" + minute).slice(-2);
+            let second = now.getSeconds();
+            second = ("00" + second).slice(-2);
+
+            let s = [hour,minute,second];
+            return s;
+        }
+    </script>
+</body>
