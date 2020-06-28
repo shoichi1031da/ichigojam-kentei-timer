@@ -1,9 +1,9 @@
 
-.main{
+/* .main{
     margin: 0 auto;
     padding: 0;
-    /* max-width: 50vh; */
-}
+    max-width: 50vh; 
+}*/
 
 .field{
     width:500px;
@@ -11,7 +11,7 @@
     background-color:#d2fec1; 
     border:9px solid;
     border-color:#6DBC5F;
-    text-align:center;
+    /* text-align:center; */
     
 }
 
