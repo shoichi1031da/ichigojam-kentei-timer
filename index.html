@@ -1,69 +1,76 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
-    <!-- <meta name="format-detection" content="telephone=no" /> -->
+    <!-- 本当はスマホでも見やすくしたいところ -->
 </head>
 
 <body>
 
-<div class="field">
+<div class="main">
+    <!-- メイン画像 -->
     <div class ="barner">
-        <img src="barner.jpg"><br><br>
+        <img src="barner.jpg"><br>
+        <!-- 現在の時刻表示 -->
+        <div class="time" id="time"></div>
+        <!-- スタートボタン -->
         <button id="btn" style = "height:40px;width:180opx">スタート</button>
-        <div id="output"></div>
-    </div><br><br><br><br><br>
-
+    </div><br><br><br><br><br>　<!-- <br>タグ多用はよろしくないですねm(..)m -->
+    
+    <!-- 10級・9級　の残り時間 -->
     <div class="minutes30">
         <div id="minutes30"></div>
     </div><br>
 
+    <!-- 8級-1級　の残り時間 -->
     <div class="minutes50">
         <div id="minutes50"></div>
     </div> 
 </div>
 
-
- <ul>
-    <li>20問中16問以上正解で合格</li>
-    <li>途中退席OK</li>
-    <li>問題用紙に書き込みOK</li>
- </ul>
+<!-- 注意事項 -->
+ <div class="footer">
+     20問中16問以上正解で合格  /  問題用紙に書き込みOK
+</div>
 
 
     <script>
-
+        //500ミリ秒ごとにclock()関数を実行
         timerID = setInterval('clock()',500);
-        let flag = 0;
-        let st = 0;
-        let ct = 0;
-        let mt = 1;
-        let target2 = document.getElementById("minutes30");
-        let target3 = document.getElementById("minutes50");
-        target2.innerHTML = "10,9級"+" ----> "+"30:00";
-        target3.innerHTML = "8 ~1級"+" ----> "+"50:00";
+        
+        let flag = 0; //ボタンを押したかどうかのフラグ
+        let st = 0; //開始時間
+        let ct = 0; //経過時間
+        let mt = 1; //経過時間（分）
+        let target30 = document.getElementById("minutes30");
+        let target50 = document.getElementById("minutes50");
+        target30.innerHTML = "10,9級"+" ----> "+"30:00"; //10・9級の残り時間を表示
+        target50.innerHTML = "8 ~1級"+" ----> "+"50:00"; //8-1級の残り時間を表示
 
-        //検定開始
+        //検定開始ボタン
         btn.onclick = () => {
             if(!flag) st = new Date();
             flag = 1;
         }
 
-        //時間の表示
+        //現在の時刻表示
         function clock(){
-            let target = document.getElementById("output");
+            let target = document.getElementById("time");
             target.innerHTML = getnow().join(":");
+            //残り時間の計算処理
             if(flag){
-                ct = parseInt((new Date() - st)/1000);
-                mt = parseInt(ct/60);
+                ct = parseInt((new Date() - st)/1000); //整数の秒に
+                mt = parseInt(ct/60); //整数の分に
                 
+                //経過時間が30分未満
                 if(mt < 30){
-                    target2.innerHTML = "10,9級"+" ----> " + ("00"+(29-mt)).slice(-2) + ":" + ("00"+(59-ct%60)).slice(-2);
-                    target3.innerHTML = "8 ~1級"+" ----> " + ("00"+(49-mt)).slice(-2) + ":" + ("00"+(59-ct%60)).slice(-2);
+                    target30.innerHTML = "10,9級"+" ----> " + ("00"+(29-mt)).slice(-2) + ":" + ("00"+(59-ct%60)).slice(-2);
+                    target50.innerHTML = "8 ~1級"+" ----> " + ("00"+(49-mt)).slice(-2) + ":" + ("00"+(59-ct%60)).slice(-2);
+                //経過時間が30分-49分
                 }else if(mt < 50) {
-                    target2.innerHTML = "10,9級"+" ----> "+"終了！！";
-                    target3.innerHTML = "8 ~1級"+" ----> " + ("00"+(49-mt)).slice(-2) + ":" + ("00"+(59-ct%60)).slice(-2);
-                }else target3.innerHTML = "8 ~1級"+" ----> "+"終了！！"
+                    target30.innerHTML = "10,9級"+" ----> "+"終了！！";
+                    target50.innerHTML = "8 ~1級"+" ----> " + ("00"+(49-mt)).slice(-2) + ":" + ("00"+(59-ct%60)).slice(-2);
+                //50分経過
+                }else target50.innerHTML = "8 ~1級"+" ----> "+"終了！！"
 
             }
         }
@@ -71,10 +78,12 @@
         //時刻の取得
         function getnow(){
             let now = new Date();
+            //使わないが念のため年・月・日も取得
             let year = now.getFullYear();
             let month = now.getMonth()+1;
             let date = now.getDate();
 
+            //二桁で時・分・秒を取得
             let hour = now.getHours();
             hour = ("00" + hour).slice(-2);
             let minute = now.getMinutes();
@@ -82,8 +91,9 @@
             let second = now.getSeconds();
             second = ("00" + second).slice(-2);
 
-            let s = [hour,minute,second];
-            return s;
+            let time = [hour,minute,second];
+            return time;
         }
+
     </script>
 </body>
